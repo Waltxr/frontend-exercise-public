@@ -16,10 +16,10 @@ new Autocomplete(document.getElementById('state'), {
   },
 });
 
-
 // Github Users
-// new Autocomplete(document.getElementById('gh-user'), {
-//   onSelect: (ghUserId) => {
-//     console.log('selected github user id:', ghUserId);
-//   },
-// });
+new Autocomplete(document.getElementById('gh-user'), {
+  httpResource: 'https://api.github.com/search/users',
+  onSelect: (ghUserId) => {
+    console.log('selected github user id:', ghUserId);
+  },
+});

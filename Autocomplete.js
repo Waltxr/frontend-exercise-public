@@ -65,10 +65,51 @@ export default class Autocomplete {
     return inputEl;
   }
 
+  onHttpQueryChange(query) {
+    return fetch(`${this.options.httpResource}?q=${query}&per_page=${this.options.numOfResults}`, {
+        method: "GET",
+    })
+    .then(response => {
+      return response.json()
+    })
+    .then(res => {
+      console.log(res);
+      let users = res.items
+      .map(user => ({
+        text: user.login,
+        value: user.id
+      }))
+      return users
+    })
+    .then( users => {
+      console.log(users);
+      this.updateDropdown(users)
+    })
+  }
+
+  createHttpQueryInputEl() {
+    const inputEl = document.createElement('input');
+    inputEl.setAttribute('type', 'search');
+    inputEl.setAttribute('name', 'query');
+    inputEl.setAttribute('autocomplete', 'off');
+
+    inputEl.addEventListener('input',
+      event => this.onHttpQueryChange(event.target.value));
+
+    return inputEl;
+  }
+
+
   init() {
-    // Build query input
-    this.inputEl = this.createQueryInputEl();
-    this.rootEl.appendChild(this.inputEl)
+
+    if (this.options.httpResource) {
+      this.inputEl = this.createHttpQueryInputEl();
+      this.rootEl.appendChild(this.inputEl)
+    } else {
+      // Build query input
+      this.inputEl = this.createQueryInputEl();
+      this.rootEl.appendChild(this.inputEl)
+    }
 
     // Build results dropdown
     this.listEl = document.createElement('ul');
