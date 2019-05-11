@@ -45,7 +45,7 @@ export default class Autocomplete {
 
       // Pass the value to the onSelect callback
       el.addEventListener('click', () => {
-        const { onSelect } = this.options;
+        const { onSelect } = this.options;        
         if (typeof onSelect === 'function') onSelect(result.value);
       });
 
@@ -74,20 +74,9 @@ export default class Autocomplete {
 
   onHttpQueryChange(query) { // get data with asynchronous fetch if there's a query
     if (!query=='') {
-      return fetch(`${this.options.httpResource}?q=${query}&per_page=${this.options.numOfResults}`)
-      .then(response => {
-        return response.json()
-      })
-      .then(res => {
-        let users = res.items
-        .map(user => ({
-          text: user.login,
-          value: user.id
-        }))
-        return users
-      })
-      .then( users => {
-        this.updateDropdown(users)
+      this.options.getHttpResourceData(query, this.options.numOfResults)
+      .then( items => {
+        this.updateDropdown(items)
       })
     } else if (query=='') {
       const emptyList = []
@@ -103,7 +92,6 @@ export default class Autocomplete {
 
     return inputEl;
   }
-
 
   navigateList() {
     document.onkeydown = (e) => {
@@ -129,14 +117,14 @@ export default class Autocomplete {
           }
         break;
         case 13:
-          activeEl.click() //trigger onSelect
+          activeEl.click() //trigger onSelect via enter key
         default:
       }
     }
   }
 
-  init() {    
-    if (this.options.httpResource) { // if httpResource send to different creat input function
+  init() {
+    if (this.options.getHttpResourceData) { // if httpResource send to different creat input function
       this.inputEl = this.createHttpQueryInputEl();
       this.rootEl.appendChild(this.inputEl)
     } else {
