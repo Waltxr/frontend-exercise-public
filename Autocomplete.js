@@ -116,11 +116,11 @@ export default class Autocomplete {
           }
           break;
         case 38:
-          if (activeEl.name == 'query') {
+          if (activeEl.name == 'query') {            
             activeEl.focus() //focus on current element if you are at end of the list.
           } else if (activeEl.previousSibling == null) {
              activeEl.parentElement.previousSibling.focus() //focus on input if no more list items
-          } else {
+          } else if (activeEl.classList.value == 'result') {
             activeEl.previousSibling.focus() //focus on previous list item
           }
         break;
