@@ -54,11 +54,17 @@ export default class Autocomplete {
     return fragment;
   }
 
-  createQueryInputEl() {
+  createQueryInput() { //create queryInput without eventListener
     const inputEl = document.createElement('input');
     inputEl.setAttribute('type', 'search');
     inputEl.setAttribute('name', 'query');
     inputEl.setAttribute('autocomplete', 'off');
+
+    return inputEl;
+  }
+
+  createStaticQueryInputEl() { //add event listener for static data array
+    const inputEl = this.createQueryInput()
 
     inputEl.addEventListener('input',
       event => this.onQueryChange(event.target.value));
@@ -89,17 +95,15 @@ export default class Autocomplete {
     }
   }
 
-  createHttpQueryInputEl() {
-    const inputEl = document.createElement('input');
-    inputEl.setAttribute('type', 'search');
-    inputEl.setAttribute('name', 'query');
-    inputEl.setAttribute('autocomplete', 'off');
+  createHttpQueryInputEl() { // add eventListener for data from http resource
+    const inputEl = this.createQueryInput()
 
     inputEl.addEventListener('input',
       event => this.onHttpQueryChange(event.target.value));
 
     return inputEl;
   }
+
 
   navigateList() {
     document.onkeydown = (e) => {
@@ -116,7 +120,7 @@ export default class Autocomplete {
           }
           break;
         case 38:
-          if (activeEl.name == 'query') {            
+          if (activeEl.name == 'query') {
             activeEl.focus() //focus on current element if you are at end of the list.
           } else if (activeEl.previousSibling == null) {
              activeEl.parentElement.previousSibling.focus() //focus on input if no more list items
@@ -131,13 +135,13 @@ export default class Autocomplete {
     }
   }
 
-  init() {
+  init() {    
     if (this.options.httpResource) { // if httpResource send to different creat input function
       this.inputEl = this.createHttpQueryInputEl();
       this.rootEl.appendChild(this.inputEl)
     } else {
       // Build query input
-      this.inputEl = this.createQueryInputEl();
+      this.inputEl = this.createStaticQueryInputEl();
       this.rootEl.appendChild(this.inputEl)
     }
     // Build results dropdown
