@@ -9,11 +9,11 @@
 
 ## Autocomplete Component Notes
 
-###### Creating instance of component takes in two arguments:
+#### Creating instance of component takes in two arguments:
 1. The div which the component will append the list of data
 2. An options object, containing either a data array (for static data) or a getHttpResourceData function that you will need to write to retrieve data from the http data source of your choosing.
 
-###### getHttpResourceData function
+#### getHttpResourceData function
 This function is needs to be written to fetch data from your http resource, and provided to the component. For this exercise with github, this is the fetch function used:
 
 ```
