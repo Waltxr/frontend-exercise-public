@@ -9,11 +9,11 @@
 
 ## Autocomplete Component Notes
 
-- Creating instance of component takes in two arguments:
-1. The <div> which the component will append the list of data
+###### Creating instance of component takes in two arguments:
+1. The div which the component will append the list of data
 2. An options object, containing either a data array (for static data) or a getHttpResourceData function that you will need to write to retrieve data from the http data source of your choosing.
 
-- getHttpResourceData function
+###### getHttpResourceData function
 This function is needs to be written to fetch data from your http resource, and provided to the component. For this exercise with github, this is the fetch function used:
 
 ```
@@ -44,15 +44,15 @@ new Autocomplete(document.getElementById('gh-user'), {
 })
 ```
 
-## Exercise Requirements
-1. The Component can have multiple instances on the same page. There are currently three functioning Autocomplete components on the page in my solution.
+## Met Requirements
+- The Component can have multiple instances on the same page. There are currently three functioning Autocomplete components on the page in my solution.
 
-2. The "States" example using a static data array continues to work.
+- The "States" example using a static data array continues to work.
 
-3. The component is designed to accept any HTTP endpoint. This is demonstrated by the addition of an Autocomplete component on this page that uses a list of Public APIs as a data resource: https://api.publicapis.org/entries. This works by writing the fetch function in index.js and passing it as an argument when creating an instance of Autocomplete.
+- The component is designed to accept any HTTP endpoint. This is demonstrated by the addition of an Autocomplete component on this page that uses a list of Public APIs as a data resource: https://api.publicapis.org/entries. This works by writing the fetch function in index.js and passing it as an argument when creating an instance of Autocomplete.
 
-4. Component works correctly in Chrome.
+- Component works correctly in Chrome.
 
-5. I chose not to use jQuery or Lodash. Everything is vanilla js.
+- I chose not to use jQuery or Lodash. Everything is vanilla js.
 
-6. I made slight modifications to the existing code. In the init() function there is a conditional which determines if the component is using a static data array or an http data source. Then it calls a different function depending on the condition. getResults, onQueryChange, updateDropdown and createResultsEl all remain the same, and are used when pulling data from an http resource.
+- I made slight modifications to the existing code. In the init() function there is a conditional which determines if the component is using a static data array or an http data source. Then it calls a different function depending on the condition. getResults, onQueryChange, updateDropdown and createResultsEl all remain the same, and are used when pulling data from an http resource.
